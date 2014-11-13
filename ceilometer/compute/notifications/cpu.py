@@ -138,3 +138,10 @@ class CpuPercent(ComputeMetricsNotificationBase):
     metric = 'cpu.percent'
     unit = '%'
     sample_type = sample.TYPE_GAUGE
+
+
+class MemoryUsed(ComputeMetricsNotificationBase):
+    """Handle Memory used message."""
+    metric = 'memory.used'
+    sample_type = sample.TYPE_GAUGE
+    unit = 'MB'
