@@ -176,4 +176,28 @@ class LibvirtInspector(virt_inspector.Inspector):
                                              write_requests=block_stats[2],
                                              write_bytes=block_stats[3],
                                              errors=block_stats[4])
+
             yield (disk, stats)
+    
+    
+    def inspect_disk_info(self, instance):
+        instanceName = instance.__dict__[INSTANCE_INFO][INSTANCE_NAME]
+        domain = self._lookup_by_name(instanceName)
+        (state, __, __, __, __) = domain.info()
+        if state == libvirt.VIR_DOMAIN_SHUTOFF:
+            LOG.warn(_('Failed to inspect disks of %(instance_name)s, '
+                       'domain is in state of SHUTOFF'),
+                     {'instanceName': instanceName})
+            return
+        tree = etree.fromstring(domain.XMLDesc(0))
+        for device in filter(
+                bool,
+                [target.get("dev")
+                 for target in tree.findall('devices/disk/target')]):
+            disk = virt_inspector.Disk(device=device)
+            block_info = domain.blockInfo(device)
+            info = virt_inspector.DiskInfo(capacity=block_info[0],
+                                           allocation=block_info[1],
+                                           physical=block_info[2])
+
+            yield (disk, info)

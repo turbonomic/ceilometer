@@ -132,6 +132,10 @@ DiskRateStats = collections.namedtuple('DiskRateStats',
                                         'write_requests_rate'])
 
 
+DiskInfo = collections.namedtuple('DiskInfo',
+                                   ['capacity', 'allocation',
+                                    'physical'])
+
 # Exception types
 #
 class InspectorException(Exception):
@@ -163,8 +167,6 @@ class Inspector(object):
         """Inspect the CPU Utilization (%) for an instance.
 
         :param instance: the target instance
-        :param duration: the last 'n' seconds, over which the value should be
-               inspected
         :return: the percentage of CPU utilization
         """
         raise NotImplementedError()
@@ -182,8 +184,6 @@ class Inspector(object):
         """Inspect the vNIC rate statistics for an instance.
 
         :param instance: the target instance
-        :param duration: the last 'n' seconds, over which the value should be
-               inspected
         :return: for each vNIC, the rate of bytes & packets
                  received and transmitted
         """
@@ -202,8 +202,6 @@ class Inspector(object):
         """Inspect the memory usage statistics for an instance.
 
         :param instance: the target instance
-        :param duration: the last 'n' seconds, over which the value should be
-               inspected
         :return: the amount of memory used
         """
         raise NotImplementedError()
@@ -212,13 +210,19 @@ class Inspector(object):
         """Inspect the disk statistics as rates for an instance.
 
         :param instance: the target instance
-        :param duration: the last 'n' seconds, over which the value should be
-               inspected
         :return: for each disk, the number of bytes & operations
                  read and written per second, with the error count
         """
         raise NotImplementedError()
 
+    def inspect_disk_info(self, instance):
+        """Inspect the disk information for an instance and all device in that instance
+
+        :param instance: the target instance
+        :return: for each instance and all devices in it, the capacity ,usage
+                and allocation
+        """
+        raise NotImplementedError()
 
 def get_hypervisor_inspector():
     try:
