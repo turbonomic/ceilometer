@@ -85,6 +85,12 @@ disk.write.bytes               c      B          inst ID   p         1, 2       
 disk.write.bytes.rate          g      B/s        inst ID   p         1, 2, 3     Average volume of writes in B per second
 disk.root.size                 g      GB         inst ID   n         1, 2        Size of root disk in GB
 disk.ephemeral.size            g      GB         inst ID   n         1, 2        Size of ephemeral disk in GB
+disk.capacity                  g      B          inst ID   n         1           Capacity of disk in B
+disk.allocation                g      B          inst ID   n         1           Allocation of disk in B
+disk.usage                     g      B          inst ID   n         1           Usage of disk in B
+disk.device.capacity           g      B          inst ID   n         1           Capacity per device of disk in B
+disk.device.allocation         g      B          inst ID   n         1           Allocation per device of disk in B
+disk.device.usage              g      B          inst ID   n         1           Usage per device of  disk in B
 network.incoming.bytes         c      B          iface ID  p         1, 2        Number of incoming bytes on a VM network interface
 network.incoming.bytes.rate    g      B/s        iface ID  p         1, 2, 3     Average rate per sec of incoming bytes on a VM network interface
 network.outgoing.bytes         c      B          iface ID  p         1, 2        Number of outgoing bytes on a VM network interface

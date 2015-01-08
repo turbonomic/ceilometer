@@ -216,11 +216,10 @@ class Inspector(object):
         raise NotImplementedError()
 
     def inspect_disk_info(self, instance):
-        """Inspect the disk information for an instance and all device in that instance
+        """Inspect the disk information for an instance
 
         :param instance: the target instance
-        :return: for each instance and all devices in it, the capacity ,usage
-                and allocation
+        :return: for each disk , capacity , alloaction and usage
         """
         raise NotImplementedError()
 
