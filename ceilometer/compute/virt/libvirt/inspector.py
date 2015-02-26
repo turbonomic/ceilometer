@@ -178,8 +178,7 @@ class LibvirtInspector(virt_inspector.Inspector):
                                              errors=block_stats[4])
 
             yield (disk, stats)
-    
-    
+
     def inspect_disk_info(self, instance):
         instanceName = instance.__dict__[INSTANCE_INFO][INSTANCE_NAME]
         domain = self._lookup_by_name(instanceName)
@@ -199,5 +198,4 @@ class LibvirtInspector(virt_inspector.Inspector):
             info = virt_inspector.DiskInfo(capacity=block_info[0],
                                            allocation=block_info[1],
                                            physical=block_info[2])
-
             yield (disk, info)
