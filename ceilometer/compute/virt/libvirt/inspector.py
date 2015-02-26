@@ -199,3 +199,4 @@ class LibvirtInspector(virt_inspector.Inspector):
                                            allocation=block_info[1],
                                            physical=block_info[2])
             yield (disk, info)
+
