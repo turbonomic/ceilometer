@@ -19,7 +19,6 @@
 
 from lxml import etree
 from oslo.config import cfg
-from oslo.utils import units
 
 from ceilometer.compute.virt import inspector as virt_inspector
 from ceilometer.openstack.common.gettextutils import _  # noqa
@@ -115,9 +114,9 @@ class LibvirtInspector(virt_inspector.Inspector):
         return virt_inspector.CPUStats(number=num_cpu, time=cpu_time)
 
     def inspect_memory_usage(self, instance, duration=None):
-        instanceName = instance.__dict__[INSTANCE_INFO][INSTANCE_NAME]
+        instanceName = instance.__dict__['_info']['OS-EXT-SRV-ATTR:instance_name']
         domain = self._lookup_by_name(instanceName)
-        memory = domain.memoryStats()[RSS_MEMORY] / units.Ki
+        memory = domain.memoryStats()['rss']/1024
         return virt_inspector.MemoryUsageStats(usage=memory)
 
     def inspect_vnics(self, instance_name):
@@ -176,7 +175,6 @@ class LibvirtInspector(virt_inspector.Inspector):
                                              write_requests=block_stats[2],
                                              write_bytes=block_stats[3],
                                              errors=block_stats[4])
-
             yield (disk, stats)
 
     def inspect_disk_info(self, instance):
@@ -199,4 +197,3 @@ class LibvirtInspector(virt_inspector.Inspector):
                                            allocation=block_info[1],
                                            physical=block_info[2])
             yield (disk, info)
-
